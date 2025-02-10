@@ -1,0 +1,23 @@
+[
+  {
+    "objectID": "hello.html",
+    "href": "hello.html",
+    "title": "Phylogenetic Analysis Research Manual",
+    "section": "",
+    "text": "Install MAFFT.\n\nFor Windows, follow the steps outlined here.\nFor Mac, this may be done using Homebrew. Open Terminal and run the command: brew install mafft."
+  },
+  {
+    "objectID": "hello.html#installing-the-required-software",
+    "href": "hello.html#installing-the-required-software",
+    "title": "Phylogenetic Analysis Research Manual",
+    "section": "",
+    "text": "Install MAFFT.\n\nFor Windows, follow the steps outlined here.\nFor Mac, this may be done using Homebrew. Open Terminal and run the command: brew install mafft."
+  },
+  {
+    "objectID": "hello.html#meet-the-penguins",
+    "href": "hello.html#meet-the-penguins",
+    "title": "Phylogenetic Analysis Research Manual",
+    "section": "Meet the penguins",
+    "text": "Meet the penguins\n\nThe penguins data from the palmerpenguins package contains size measurements for 344 penguins from three species observed on three islands in the Palmer Archipelago, Antarctica.\nThe plot below shows the relationship between flipper and bill lengths of these penguins."
+  }
+]

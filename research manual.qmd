@@ -1,0 +1,77 @@
+```{r}
+#| label: load-packages
+#| include: false
+
+library(tidyverse)
+library(palmerpenguins)
+```
+
+## A. Installing the required software
+
+1. Install MAFFT.
+<!-- Insert logos of applications to be downloaded -->
+  - For Windows, follow the steps outlined [here](https://mafft.cbrc.jp/alignment/software/ubuntu_on_windows.html).
+  - For Mac, this may be done using Homebrew. Open Terminal and run the command: `brew install mafft`.
+
+2. Visit [MEGA’s official website](https://www.megasoftware.net/) and download the appropriate version of MEGA 11 for your machine.
+
+3. Download BEAST 2 version 2.7.7 from [BEAST 2's official website](https://www.beast2.org).
+
+4. Install Tracer v1.7.2 by downloading the appropriate file for your machine [here](https://github.com/beast-dev/tracer/releases/tag/v1.7.2). 
+
+5. Install FigTree v1.4.4 [here](https://github.com/rambaut/figtree/releases). As in Step 4, download the appropriate file for your machine: dmg for Mac, zip for Windows, and tgz for Linux.
+
+## B. Download SARS-CoV-2 metadata and sequences from GISAID
+1. Proceed to [https://gisaid.org/](https://gisaid.org/).
+2. Under EpiCov, click Search and select at least two viruses. #insert screenshot
+3. Download the corresponding FASTA file.
+
+
+## C. Quality Check with Nextclade
+1. Proceed to [clades.nextstrain.org](clades.nextstrain.org).
+2. Import your FASTA file under “Add sequence data” and click “Run.”
+3. After analysis, examine the six QC metrics for each sequence.
+4. Remove or flag sequences that fail quality metrics.
+5. Save the filtered dataset as sars-cov-2_QC_passed.fasta.
+
+## D. Alignment using MAFFT
+1. Type Ubuntu on your search bar.
+2. Click Ubuntu 18.04.5/Ubuntu 20.04.5. (Note: For Mac, open Terminal.)
+3. Navigate to the directory containing your data file (sars-cov-2.fasta) using the cd command as follows:
+`cd win-home/Desktop/Phylogenetic\ Analysis\Training/Data/`
+
+4. To know the file name, type `ls`.
+
+5. Then type `mafft`.
+
+6. Highlight the file name in step 4 (sars-cov-2.fasta) then press Ctrl+Shift+C (Ctrl+C for Mac) then right click in the input file section and paste the file name.
+
+7. For the output file, type `sars-cov-2_align.fasta`.
+
+8. For the output format, type `4`.
+
+9. For strategy, choose auto by typing `1`. (Note: You may also choose your desired strategy.)
+
+10. For additional arguments, just press `Enter`.
+11. If you are okay with your inputs, press `Enter`.
+12. Wait for the program to finish the alignment. When you see - - More - - (0%), it means that the alignment is finished. (Note: For Mac, the last line should be the name of the output file.)
+13. Exit the application.
+
+The output file (sars-cov-2_align.fasta) will be generated in the same directory.
+
+## E. Trimming using MEGA 11
+
+1. Open MEGA 11.
+2. Click `File` then `Open a File/Session`. Navigate to your aligned fasta file generated in Part D.
+3. Choose `Align`.
+4. To remove leading gaps in sequences, locate the last column containing gaps (-). Hold Shift and click the first column with gaps to select the entire region, then press Delete (fn+Delete for Mac) to remove these columns.
+5. To remove trailing gaps, navigate to the end of the sequences. Hold Shift and click to select all columns with gaps from the first gap to the end of the alignment, then press Delete (fn+Delete for Mac) to remove these columns.
+6. You now have the same length for all the sequences. Now, you need to search for gaps in between the sequences by using Ctrl+F then press “-” (minus sign) then Enter.
+7. Inspect all columns with gaps. You may use the Find Next function under Search to find the next gap. If the column has more than 2 nucleotides present, DO NOT DELETE the column. Otherwise, delete it.
+8. After trimming everything, delete the reference fasta file.
+9. Go to Data then Export Alignment then FASTA format. Save the file in the training folder, then rename it to sars-cov-2_align_trim.fasta. Then press Enter.
+10. Exit the application.
+
+
+
+

@@ -1,0 +1,13 @@
+title: "Phylogenetic Analysis Research Manual"
+subtitle: "Mindanao Center for Disease Watch and Analytics (DiWA Center)"
+
+format: 
+  html:
+    title-block-banner: "#34464F"
+    title-block-logo: logo.png
+    toc: true
+    toc-title: Table of Contents
+editor: source
+
+body-header: | 
+  This page brought to you by <https://example.com>
