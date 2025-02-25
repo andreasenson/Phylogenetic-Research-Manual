@@ -73,6 +73,10 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#c.-quality-check-with-nextclade" id="toc-c.-quality-check-with-nextclade" class="nav-link" data-scroll-target="#c.-quality-check-with-nextclade">C. Quality Check with Nextclade</a></li>
   <li><a href="#d.-alignment-using-mafft" id="toc-d.-alignment-using-mafft" class="nav-link" data-scroll-target="#d.-alignment-using-mafft">D. Alignment using MAFFT</a></li>
   <li><a href="#e.-trimming-using-mega-11" id="toc-e.-trimming-using-mega-11" class="nav-link" data-scroll-target="#e.-trimming-using-mega-11">E. Trimming using MEGA 11</a></li>
+  <li><a href="#f.-checking-temporal-signal" id="toc-f.-checking-temporal-signal" class="nav-link" data-scroll-target="#f.-checking-temporal-signal">F. Checking Temporal Signal</a></li>
+  <li><a href="#g.-generating-and-running-the-xml-file" id="toc-g.-generating-and-running-the-xml-file" class="nav-link" data-scroll-target="#g.-generating-and-running-the-xml-file">G. Generating and running the XML file</a></li>
+  <li><a href="#h.-diagnosing-convergence-problems-using-tracer" id="toc-h.-diagnosing-convergence-problems-using-tracer" class="nav-link" data-scroll-target="#h.-diagnosing-convergence-problems-using-tracer">H. Diagnosing convergence problems using Tracer</a></li>
+  <li><a href="#i.-annotating-the-phylogenetic-trees" id="toc-i.-annotating-the-phylogenetic-trees" class="nav-link" data-scroll-target="#i.-annotating-the-phylogenetic-trees">I. Annotating the phylogenetic trees</a></li>
   </ul>
 </nav>
 </div>
@@ -148,6 +152,53 @@ ul.task-list li input[type="checkbox"] {
 <li>After trimming everything, delete the reference fasta file.</li>
 <li>Go to Data then Export Alignment then FASTA format. Save the file in the training folder, then rename it to sars-cov-2_align_trim.fasta. Then press Enter.</li>
 <li>Exit the application.</li>
+</ol>
+</section>
+<section id="f.-checking-temporal-signal" class="level2">
+<h2 class="anchored" data-anchor-id="f.-checking-temporal-signal">F. Checking Temporal Signal</h2>
+<ol type="1">
+<li>Launch TempEst and select the tree file from the previous section, then click Open.</li>
+<li>Navigate to the Parse Dates tab and select “Define just by its order.” Choose “last” from the Order dropdown menu. If your data only includes years, select “Parse as a Number.” For other configuration of dates in the taxon labels, you may refer to <a href="https://beast.community/tip_dates">this documentation</a>.</li>
+<li>Proceed to the Root-to-tip tab. On the left panel, choose the most appropriate procedure under Function, and tick the box for Best-fitting root.</li>
+<li>Take note of the value for Slope (rate).</li>
+</ol>
+<p>For more information, see <a href="https://beast.community/tempest_tutorial">this documentation</a>.</p>
+</section>
+<section id="g.-generating-and-running-the-xml-file" class="level2">
+<h2 class="anchored" data-anchor-id="g.-generating-and-running-the-xml-file">G. Generating and running the XML file</h2>
+<ol type="1">
+<li>In your Desktop, open the BEAST folder, then open BEAUti.</li>
+<li>Click <code>File</code>, <code>Import Alignment</code>, and select the trimmed file.</li>
+<li>In the data type of alignment, select <code>nucleotide</code> then <code>OK</code>.</li>
+<li>Go to the <code>Tip Dates</code> tab and select <code>Use Tip Dates</code>. To do this, the sequences used for the analysis should have been labeled with tip dates. Select the appropriate format of the dates in the <code>as dates with format</code>.</li>
+<li>Click <code>Auto-configure</code>. Click <code>use everything</code> then select <code>after last</code> then type the character that was used in the name of your sequences before the dates. Then click <code>OK</code>.</li>
+<li>Go to the <code>Site Model</code> tab and select the substitution model to be used. For uniformity, select <code>HKY</code> model then set the gamma category count to <code>4</code>.</li>
+<li>Go to the <code>Clock Model</code> tab and select the molecular clock to be used. For uniformity, select <code>Strict Clock</code>. Use the clock rate obtained in Section F.</li>
+<li>Go to the <code>Priors</code> tab and select the Tree Prior to be used. For uniformity, select <code>Phylodynamics: Birth Death SIR (serial)</code>. You can leave the other parameters as default.</li>
+<li>Go to the <code>MCMC</code> tab and specify the length of the chain and the frequency of sampling the posterior distribution. It is recommended to have a minimum of 100,000 trees sampled from the posterior. For analysis involving estimation of multiple model parameters or evolutionary dynamics, the length of the chain will need to be increased accordingly. For this training, set the chain length to 50,000. Set the <code>tracelog</code>, <code>screenlog</code> and <code>treelog</code> to 5,000.</li>
+<li>Click <code>Save</code> in the <code>File</code> tab then type <code>sars-cov-2.xml</code>. Make sure that that file type is xml.</li>
+<li>Open BEAST. Click <code>Choose File</code> and navigate to the directory where the xml file is located. Select the file and click <code>Open</code> to load it. Tick the box for <code>Use BEAGLE library if available</code>.</li>
+<li>Click <code>Run</code> to start the tree estimation process. You will see a java window displaying the progress of the analysis. The analysis will automatically stop once the length of the chain has been reached. BEAST will output log files containing the samples obtained from the posterior for all parameters being estimated and a trees file containing all the phylogenetic trees sampled from the posterior distribution.</li>
+</ol>
+</section>
+<section id="h.-diagnosing-convergence-problems-using-tracer" class="level2">
+<h2 class="anchored" data-anchor-id="h.-diagnosing-convergence-problems-using-tracer">H. Diagnosing convergence problems using Tracer</h2>
+<ol type="1">
+<li>Open the Tracer software. Click <code>File</code> and select <code>Import Trace File</code>. Navigate to the directory where the log file (sars-cov-2.log) is located. Select the log file and click <code>Open</code> to load it.</li>
+<li>Examine the Effective Sampling Size (ESS) of each continuous parameter. Ideally, all important tree parameters under investigation should have a <strong>minimum ESS of 200</strong>. You can utilize the different options available to visualize the posterior distribution of each estimated parameter.</li>
+<li>Trace statistics can be improved by increasing the MCMC length of the chain. Additionally, it is possible to simultaneously run the same xml file and combine the output files to improve the ESS values of each parameter.</li>
+<li>The LogCombiner software can be used to combine one or more log files (or tree files) given that all have been analyzed using the same parameters.</li>
+</ol>
+</section>
+<section id="i.-annotating-the-phylogenetic-trees" class="level2">
+<h2 class="anchored" data-anchor-id="i.-annotating-the-phylogenetic-trees">I. Annotating the phylogenetic trees</h2>
+<ol type="1">
+<li>Open the <strong>Tree Annotator</strong> software. Specify the burn in as number of states, typically 10% of the MCMC length of chain.</li>
+<li>Click Choose File in <code>Input Tree File</code>. Navigate to the directory where the trees file (sars-cov-2-sars-cov-2_align_trim.trees) generated by BEAST is located. Select the trees file and click <code>Open</code> to load it.</li>
+<li>Click Choose File in <code>Output File</code>. Input the filename <code>sars-cov-2_annotate.mcc</code> to be used for the Maximum Clade Credibility (MCC) Tree. Click <code>Save</code>.</li>
+<li>Click <code>Run</code> and wait for the annotation to finish.</li>
+<li>Open the <strong>FigTree software</strong>. Click <code>File</code> and select <code>Open</code>. Navigate to the directory where the MCC Tree is located. Select the tree file and click <code>Open</code> to load it.</li>
+<li>You can annotate the MCC tree by selecting your preferred annotations that can be found at the left side of the panel. The resulting MCC tree can also be exported into an image or a pdf file.</li>
 </ol>
 </section>
 
