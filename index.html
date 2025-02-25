@@ -68,7 +68,15 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of Contents</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#a.-installing-the-required-software" id="toc-a.-installing-the-required-software" class="nav-link active" data-scroll-target="#a.-installing-the-required-software">A. Installing the required software</a></li>
+  <li><a href="#b.-download-sars-cov-2-metadata-and-sequences-from-gisaid" id="toc-b.-download-sars-cov-2-metadata-and-sequences-from-gisaid" class="nav-link" data-scroll-target="#b.-download-sars-cov-2-metadata-and-sequences-from-gisaid">B. Download SARS-CoV-2 metadata and sequences from GISAID</a></li>
+  <li><a href="#c.-quality-check-with-nextclade" id="toc-c.-quality-check-with-nextclade" class="nav-link" data-scroll-target="#c.-quality-check-with-nextclade">C. Quality Check with Nextclade</a></li>
+  <li><a href="#d.-alignment-using-mafft" id="toc-d.-alignment-using-mafft" class="nav-link" data-scroll-target="#d.-alignment-using-mafft">D. Alignment using MAFFT</a></li>
+  <li><a href="#e.-trimming-using-mega-11" id="toc-e.-trimming-using-mega-11" class="nav-link" data-scroll-target="#e.-trimming-using-mega-11">E. Trimming using MEGA 11</a></li>
+  <li><a href="#f.-checking-temporal-signal" id="toc-f.-checking-temporal-signal" class="nav-link" data-scroll-target="#f.-checking-temporal-signal">F. Checking Temporal Signal</a></li>
+  <li><a href="#g.-generating-and-running-the-xml-file" id="toc-g.-generating-and-running-the-xml-file" class="nav-link" data-scroll-target="#g.-generating-and-running-the-xml-file">G. Generating and running the XML file</a></li>
+  <li><a href="#h.-diagnosing-convergence-problems-using-tracer" id="toc-h.-diagnosing-convergence-problems-using-tracer" class="nav-link" data-scroll-target="#h.-diagnosing-convergence-problems-using-tracer">H. Diagnosing convergence problems using Tracer</a></li>
+  <li><a href="#i.-annotating-the-phylogenetic-trees" id="toc-i.-annotating-the-phylogenetic-trees" class="nav-link" data-scroll-target="#i.-annotating-the-phylogenetic-trees">I. Annotating the phylogenetic trees</a></li>
   </ul>
 </nav>
 </div>
@@ -78,9 +86,120 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<p>Welcome to the Phylogenetic Analysis Research Manual.</p>
+<section id="a.-installing-the-required-software" class="level2">
+<h2 class="anchored" data-anchor-id="a.-installing-the-required-software">A. Installing the required software</h2>
+<ol type="1">
+<li>Install MAFFT. <!-- Insert logos of applications to be downloaded --></li>
+</ol>
+<ul>
+<li>For Windows, follow the steps outlined <a href="https://mafft.cbrc.jp/alignment/software/ubuntu_on_windows.html">here</a>.</li>
+<li>For Mac, this may be done using Homebrew. Open Terminal and run the command: <code>brew install mafft</code>.</li>
+</ul>
+<ol start="2" type="1">
+<li><p>Visit <a href="https://www.megasoftware.net/">MEGA’s official website</a> and download the appropriate version of MEGA 11 for your machine.</p></li>
+<li><p>Download BEAST 2 version 2.7.7 from <a href="https://www.beast2.org">BEAST 2’s official website</a>.</p></li>
+<li><p>Install Tracer v1.7.2 by downloading the appropriate file for your machine <a href="https://github.com/beast-dev/tracer/releases/tag/v1.7.2">here</a>.</p></li>
+<li><p>Install FigTree v1.4.4 <a href="https://github.com/rambaut/figtree/releases">here</a>. As in Step 4, download the appropriate file for your machine: dmg for Mac, zip for Windows, and tgz for Linux.</p></li>
+</ol>
+</section>
+<section id="b.-download-sars-cov-2-metadata-and-sequences-from-gisaid" class="level2">
+<h2 class="anchored" data-anchor-id="b.-download-sars-cov-2-metadata-and-sequences-from-gisaid">B. Download SARS-CoV-2 metadata and sequences from GISAID</h2>
+<ol type="1">
+<li>Proceed to <a href="https://gisaid.org/">https://gisaid.org/</a>.</li>
+<li>Under EpiCov, click Search and select at least two viruses. #insert screenshot</li>
+<li>Download the corresponding FASTA file.</li>
+</ol>
+</section>
+<section id="c.-quality-check-with-nextclade" class="level2">
+<h2 class="anchored" data-anchor-id="c.-quality-check-with-nextclade">C. Quality Check with Nextclade</h2>
+<ol type="1">
+<li>Proceed to <a href="clades.nextstrain.org">clades.nextstrain.org</a>.</li>
+<li>Import your FASTA file under “Add sequence data” and click “Run.”</li>
+<li>After analysis, examine the six QC metrics for each sequence.</li>
+<li>Remove or flag sequences that fail quality metrics.</li>
+<li>Save the filtered dataset as sars-cov-2_QC_passed.fasta.</li>
+</ol>
+</section>
+<section id="d.-alignment-using-mafft" class="level2">
+<h2 class="anchored" data-anchor-id="d.-alignment-using-mafft">D. Alignment using MAFFT</h2>
+<ol type="1">
+<li><p>Type Ubuntu on your search bar.</p></li>
+<li><p>Click Ubuntu 18.04.5/Ubuntu 20.04.5. (Note: For Mac, open Terminal.)</p></li>
+<li><p>Navigate to the directory containing your data file (sars-cov-2.fasta) using the cd command as follows: <code>cd win-home/Desktop/Phylogenetic\ Analysis\Training/Data/</code></p></li>
+<li><p>To know the file name, type <code>ls</code>.</p></li>
+<li><p>Then type <code>mafft</code>.</p></li>
+<li><p>Highlight the file name in step 4 (sars-cov-2.fasta) then press Ctrl+Shift+C (Ctrl+C for Mac) then right click in the input file section and paste the file name.</p></li>
+<li><p>For the output file, type <code>sars-cov-2_align.fasta</code>.</p></li>
+<li><p>For the output format, type <code>4</code>.</p></li>
+<li><p>For strategy, choose auto by typing <code>1</code>. (Note: You may also choose your desired strategy.)</p></li>
+<li><p>For additional arguments, just press <code>Enter</code>.</p></li>
+<li><p>If you are okay with your inputs, press <code>Enter</code>.</p></li>
+<li><p>Wait for the program to finish the alignment. When you see - - More - - (0%), it means that the alignment is finished. (Note: For Mac, the last line should be the name of the output file.)</p></li>
+<li><p>Exit the application.</p></li>
+</ol>
+<p>The output file (sars-cov-2_align.fasta) will be generated in the same directory.</p>
+</section>
+<section id="e.-trimming-using-mega-11" class="level2">
+<h2 class="anchored" data-anchor-id="e.-trimming-using-mega-11">E. Trimming using MEGA 11</h2>
+<ol type="1">
+<li>Open MEGA 11.</li>
+<li>Click <code>File</code> then <code>Open a File/Session</code>. Navigate to your aligned fasta file generated in Part D.</li>
+<li>Choose <code>Align</code>.</li>
+<li>To remove leading gaps in sequences, locate the last column containing gaps (-). Hold Shift and click the first column with gaps to select the entire region, then press Delete (fn+Delete for Mac) to remove these columns.</li>
+<li>To remove trailing gaps, navigate to the end of the sequences. Hold Shift and click to select all columns with gaps from the first gap to the end of the alignment, then press Delete (fn+Delete for Mac) to remove these columns.</li>
+<li>You now have the same length for all the sequences. Now, you need to search for gaps in between the sequences by using Ctrl+F then press “-” (minus sign) then Enter.</li>
+<li>Inspect all columns with gaps. You may use the Find Next function under Search to find the next gap. If the column has more than 2 nucleotides present, DO NOT DELETE the column. Otherwise, delete it.</li>
+<li>After trimming everything, delete the reference fasta file.</li>
+<li>Go to Data then Export Alignment then FASTA format. Save the file in the training folder, then rename it to sars-cov-2_align_trim.fasta. Then press Enter.</li>
+<li>Exit the application.</li>
+</ol>
+</section>
+<section id="f.-checking-temporal-signal" class="level2">
+<h2 class="anchored" data-anchor-id="f.-checking-temporal-signal">F. Checking Temporal Signal</h2>
+<ol type="1">
+<li>Launch TempEst and select the tree file from the previous section, then click Open.</li>
+<li>Navigate to the Parse Dates tab and select “Define just by its order.” Choose “last” from the Order dropdown menu. If your data only includes years, select “Parse as a Number.” For other configuration of dates in the taxon labels, you may refer to <a href="https://beast.community/tip_dates">this documentation</a>.</li>
+<li>Proceed to the Root-to-tip tab. On the left panel, choose the most appropriate procedure under Function, and tick the box for Best-fitting root.</li>
+<li>Take note of the value for Slope (rate).</li>
+</ol>
+<p>For more information, see <a href="https://beast.community/tempest_tutorial">this documentation</a>.</p>
+</section>
+<section id="g.-generating-and-running-the-xml-file" class="level2">
+<h2 class="anchored" data-anchor-id="g.-generating-and-running-the-xml-file">G. Generating and running the XML file</h2>
+<ol type="1">
+<li>In your Desktop, open the BEAST folder, then open BEAUti.</li>
+<li>Click <code>File</code>, <code>Import Alignment</code>, and select the trimmed file.</li>
+<li>In the data type of alignment, select <code>nucleotide</code> then <code>OK</code>.</li>
+<li>Go to the <code>Tip Dates</code> tab and select <code>Use Tip Dates</code>. To do this, the sequences used for the analysis should have been labeled with tip dates. Select the appropriate format of the dates in the <code>as dates with format</code>.</li>
+<li>Click <code>Auto-configure</code>. Click <code>use everything</code> then select <code>after last</code> then type the character that was used in the name of your sequences before the dates. Then click <code>OK</code>.</li>
+<li>Go to the <code>Site Model</code> tab and select the substitution model to be used. For uniformity, select <code>HKY</code> model then set the gamma category count to <code>4</code>.</li>
+<li>Go to the <code>Clock Model</code> tab and select the molecular clock to be used. For uniformity, select <code>Strict Clock</code>. Use the clock rate obtained in Section F.</li>
+<li>Go to the <code>Priors</code> tab and select the Tree Prior to be used. For uniformity, select <code>Phylodynamics: Birth Death SIR (serial)</code>. You can leave the other parameters as default.</li>
+<li>Go to the <code>MCMC</code> tab and specify the length of the chain and the frequency of sampling the posterior distribution. It is recommended to have a minimum of 100,000 trees sampled from the posterior. For analysis involving estimation of multiple model parameters or evolutionary dynamics, the length of the chain will need to be increased accordingly. For this training, set the chain length to 50,000. Set the <code>tracelog</code>, <code>screenlog</code> and <code>treelog</code> to 5,000.</li>
+<li>Click <code>Save</code> in the <code>File</code> tab then type <code>sars-cov-2.xml</code>. Make sure that that file type is xml.</li>
+<li>Open BEAST. Click <code>Choose File</code> and navigate to the directory where the xml file is located. Select the file and click <code>Open</code> to load it. Tick the box for <code>Use BEAGLE library if available</code>.</li>
+<li>Click <code>Run</code> to start the tree estimation process. You will see a java window displaying the progress of the analysis. The analysis will automatically stop once the length of the chain has been reached. BEAST will output log files containing the samples obtained from the posterior for all parameters being estimated and a trees file containing all the phylogenetic trees sampled from the posterior distribution.</li>
+</ol>
+</section>
+<section id="h.-diagnosing-convergence-problems-using-tracer" class="level2">
+<h2 class="anchored" data-anchor-id="h.-diagnosing-convergence-problems-using-tracer">H. Diagnosing convergence problems using Tracer</h2>
+<ol type="1">
+<li>Open the Tracer software. Click <code>File</code> and select <code>Import Trace File</code>. Navigate to the directory where the log file (sars-cov-2.log) is located. Select the log file and click <code>Open</code> to load it.</li>
+<li>Examine the Effective Sampling Size (ESS) of each continuous parameter. Ideally, all important tree parameters under investigation should have a <strong>minimum ESS of 200</strong>. You can utilize the different options available to visualize the posterior distribution of each estimated parameter.</li>
+<li>Trace statistics can be improved by increasing the MCMC length of the chain. Additionally, it is possible to simultaneously run the same xml file and combine the output files to improve the ESS values of each parameter.</li>
+<li>The LogCombiner software can be used to combine one or more log files (or tree files) given that all have been analyzed using the same parameters.</li>
+</ol>
+</section>
+<section id="i.-annotating-the-phylogenetic-trees" class="level2">
+<h2 class="anchored" data-anchor-id="i.-annotating-the-phylogenetic-trees">I. Annotating the phylogenetic trees</h2>
+<ol type="1">
+<li>Open the <strong>Tree Annotator</strong> software. Specify the burn in as number of states, typically 10% of the MCMC length of chain.</li>
+<li>Click Choose File in <code>Input Tree File</code>. Navigate to the directory where the trees file (sars-cov-2-sars-cov-2_align_trim.trees) generated by BEAST is located. Select the trees file and click <code>Open</code> to load it.</li>
+<li>Click Choose File in <code>Output File</code>. Input the filename <code>sars-cov-2_annotate.mcc</code> to be used for the Maximum Clade Credibility (MCC) Tree. Click <code>Save</code>.</li>
+<li>Click <code>Run</code> and wait for the annotation to finish.</li>
+<li>Open the <strong>FigTree software</strong>. Click <code>File</code> and select <code>Open</code>. Navigate to the directory where the MCC Tree is located. Select the tree file and click <code>Open</code> to load it.</li>
+<li>You can annotate the MCC tree by selecting your preferred annotations that can be found at the left side of the panel. The resulting MCC tree can also be exported into an image or a pdf file.g</li>
+</ol>
 </section>
 
 </main>
