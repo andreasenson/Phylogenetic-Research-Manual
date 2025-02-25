@@ -106,4 +106,4 @@ For more information, see [this documentation ](https://beast.community/tempest_
 3. Click Choose File in `Output File`. Input the filename `sars-cov-2_annotate.mcc` to be used for the Maximum Clade Credibility (MCC) Tree. Click `Save`.
 4. Click `Run` and wait for the annotation to finish.
 5. Open the **FigTree software**. Click `File` and select `Open`. Navigate to the directory where the MCC Tree is located. Select the tree file and click `Open` to load it.
-6. You can annotate the MCC tree by selecting your preferred annotations that can be found at the left side of the panel. The resulting MCC tree can also be exported into an image or a pdf file.g
+6. You can annotate the MCC tree by selecting your preferred annotations that can be found at the left side of the panel. The resulting MCC tree can also be exported into an image or a pdf file.
